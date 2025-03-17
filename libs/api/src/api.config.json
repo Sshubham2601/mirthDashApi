@@ -1,0 +1,5 @@
+{
+    "DashBoard": "/api/channels/statuses",
+    "Channel":"/api/channels/alert"
+}
+  
