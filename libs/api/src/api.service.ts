@@ -9,9 +9,10 @@ const config = require('./api.config.json');
 @Injectable()
 export class ApiService {
   private baseUrl: string;
-
+  private apiAuth: string;
   constructor(private configService: ConfigService) {
-    this.baseUrl = this.configService.get<string>('API_BASE_URL') || 'https://localhost:8443';
+    this.baseUrl = this.configService.get<string>('API_BASE_URL') || '';
+    this.apiAuth = this.configService.get<string>('API_AUTH') || '';  // Fetch Authorization from .env
   }
 
   getEndpoint(module: string, params: Record<string, string> = {}): string {
@@ -24,7 +25,7 @@ export class ApiService {
         path = path.replace(`:${key}`, params[key]);
     });
 
-    // ✅ Prevents duplicate base URLs
+    //  Prevents duplicate base URLs
     if (path.startsWith('http')) {
         return path;
     }
@@ -41,7 +42,7 @@ export class ApiService {
         headers: {
           Accept: 'application/xml',
           'X-Requested-With': 'OpenAPI',
-          Authorization: 'Basic U2h1YmhhbTpLcmFudGlANzg5'
+          Authorization: headers['Authorization'] || `Basic ${this.apiAuth}`,
     
         },
         httpsAgent: new https.Agent({ rejectUnauthorized: false }),
