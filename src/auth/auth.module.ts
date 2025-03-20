@@ -10,18 +10,20 @@ import { EntietiesModule } from '@app/database/entieties/entieties.module';
 import { JwtStrategy } from './Strategy/jwt-strategy';
 import { AuthController } from './auth.controllers';
 import { ConfigModule } from '@nestjs/config';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { User } from '@app/database/entieties/user.entity';
 
 @Module({
   imports: [
     EntietiesModule, // Import user entity module
     DatabaseModule, // Import database module
     // PassportModule.register({ defaultStrategy: 'jwt' }),
+    SequelizeModule.forFeature([User],'Master'),
     ConfigModule.forRoot(),
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'default_secret',
       signOptions: { expiresIn: '1h' },
     })
-
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

@@ -10,7 +10,8 @@ import { User } from '@app/database/entieties/user.entity';
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    @InjectModel(User) private readonly userModel: typeof User,
+    @InjectModel(User,'Master') 
+    private readonly userModel: typeof User,
   ) {}
    
   async generateToken(empCode: string) {

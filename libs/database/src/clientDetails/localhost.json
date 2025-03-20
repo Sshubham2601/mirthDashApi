@@ -1,5 +1,6 @@
 {
     "Base": {
+      "name":"Base",
       "host": "localhost",
       "port": 3306,
       "database": "practice",
@@ -7,6 +8,7 @@
       "password": "Simple@3089"
     },
     "Master": {
+      "name":"Master",
       "host": "localhost",
       "port": 3306,
       "database": "simple",
